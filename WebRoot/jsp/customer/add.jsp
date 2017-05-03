@@ -12,6 +12,37 @@
 
 
 <META content="MSHTML 6.00.2900.3492" name=GENERATOR>
+
+
+<script type="text/javascript"
+	src="${pageContext.request.contextPath }/js/jquery-1.11.3.min.js"></script>
+	
+	<script type="text/javascript">
+
+	$(function(){
+		var url="${pageContext.request.contextPath}/dict_findByCode.action";
+		var param={"dict_type_code" : "006"};
+		$.post(url,param,function(data){
+			$(data).each(function(i,n){
+				$("#levelId").append("<option value='"+n.dict_id+"'>"
+											+ n.dict_item_name + "</option>");		
+			});
+		},"json");
+		
+		
+		var param={"dict_type_code" : "002"};
+		$.post(url,param,function(data){
+			$(data).each(function(i,n){
+				$("#sourceId").append("<option value='"+n.dict_id+"'>"
+											+ n.dict_item_name + "</option>");	
+			})
+		},"json");
+	
+	});
+	
+	
+	
+	</script>
 </HEAD>
 <BODY>
 	<FORM id=form1 name=form1
@@ -57,8 +88,7 @@
 								</td>
 								<td>客户级别 ：</td>
 								<td>
-								<INPUT class=textbox id=sChannel2
-														style="WIDTH: 180px" maxLength=50 name="custLevel">
+									<select name="level.dict_id" id="levelId"></select>
 								</td>
 							</TR>
 							
@@ -66,8 +96,9 @@
 								
 								<td>信息来源 ：</td>
 								<td>
-								<INPUT class=textbox id=sChannel2
-														style="WIDTH: 180px" maxLength=50 name="custSource">
+						
+								<select name="source.dict_id" id="sourceId"></select>
+							
 								</td>
 								<td>联系人：</td>
 								<td>

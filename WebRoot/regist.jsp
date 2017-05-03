@@ -20,7 +20,7 @@
 <META content="MSHTML 6.00.6000.16809" name=GENERATOR>
 
 <!-- 引入JQ -->
-<script type="text/javascript" src="${ pageContext.request.contextPath }/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="${ pageContext.request.contextPath }/js/jquery-1.11.3.min.js"></script>
 
 <script type="text/javascript">
 	// 验证登录名
@@ -36,6 +36,7 @@
 			// 登录名不为空，ajax请求，验证
 			var url = "${pageContext.request.contextPath}/user_checkCode.action";
 			var param = {"user_code":code};
+			
 			$.post(url,param,function(data){
 				// 操作data，进行判断
 				if(data && data == "no"){

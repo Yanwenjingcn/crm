@@ -1,6 +1,7 @@
 package com.ywj.web.action;
 
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 
 
 import com.opensymphony.xwork2.ActionContext;
@@ -8,6 +9,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.util.ValueStack;
 import com.ywj.domain.Customer;
+import com.ywj.domain.Dict;
 import com.ywj.domain.PageBean;
 import com.ywj.service.CustomerService;
 
@@ -40,7 +42,7 @@ public class CustomerAction extends ActionSupport implements ModelDriven<Custome
 		return NONE;
 	}
 	
-	// 属性驱动的方式
+	// 属性驱动的方式，看清楚，这个是integer的
 	// 当前页，默认值就是1  
 	private Integer pageCode = 1;
 	public void setPageCode(Integer pageCode) {
@@ -63,6 +65,26 @@ public class CustomerAction extends ActionSupport implements ModelDriven<Custome
 	public String findByPage(){
 		// 调用service业务层
 		DetachedCriteria criteria = DetachedCriteria.forClass(Customer.class);
+		//拼接条件
+		String cust_name=customer.getCust_name();
+		if(cust_name!=null&&!cust_name.trim().isEmpty()){
+			criteria.add(Restrictions.like("cust_name", "%"+cust_name+"%"));
+		}
+		
+		//拼接客户级别,这是个Dict的实例对象
+		Dict level=customer.getLevel();
+		if(level!=null&&level.getDict_id()!=null&&!level.getDict_id().trim().isEmpty()){
+			//反正尽量的多判断一点东西，会有好处的.
+			//看清楚这个eq内容的写法
+			criteria.add(Restrictions.eq("level.dict_id", level.getDict_id()));
+		}		
+		//拼接客户的来源
+		Dict source=customer.getSource();
+		if(source!=null&&source.getDict_id()!=null&&!source.getDict_id().trim().isEmpty()){
+			criteria.add(Restrictions.eq("source.dict_id", source.getDict_id()));
+		}
+		
+		//如果没有拼接内容的话就是默认的，就是都查询出来
 		// 查询
 		PageBean<Customer> page = customerService.findByPage(pageCode,pageSize,criteria);
 		// 压栈
@@ -70,6 +92,14 @@ public class CustomerAction extends ActionSupport implements ModelDriven<Custome
 		// 栈顶是map<"page",page对象>
 		vs.set("page", page);
 		return "page";
+	}
+	
+	/*
+	 * 
+	 */
+	public String initAddUI(){
+		
+		return "initAddUI";
 	}
 	
 }

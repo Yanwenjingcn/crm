@@ -13,7 +13,7 @@ public class User {
   `user_password` VARCHAR(32) NOT NULL COMMENT '用户密码',
   `user_state` CHAR(1) NOT NULL COMMENT '1:正常,0:暂停',
 	 */
-	
+	//javabean的属性是由get、set方法决定的
 	// 主键
 	private Long user_id;
 	// 登录名称
