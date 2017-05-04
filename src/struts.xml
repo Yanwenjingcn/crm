@@ -4,6 +4,9 @@
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
 
+<!-- 设置文件上传的大小限制。struts.multipart.maxSize=2097152 -->
+<constant name="struts.multipart.maxSize" value="20971520"></constant>
+
 	<!-- 先配置包结构 -->
 	<package name="crm" extends="struts-default" namespace="/">
 
@@ -16,6 +19,10 @@
 		<action name="customer_*" class="customerAction" method="{1}">
 			<result name="page">/jsp/customer/list.jsp</result>
 			<result name="initAddUI">/jsp/customer/add.jsp</result>
+			<!-- 这种是重定向到另一个动作，所以动作钱买你没有斜杠/ -->
+			<result name="save" type="redirectAction">customer_findByPage.action</result>
+			<result name="input">/jsp/error.jsp</result>
+			<result name="delete" type="redirectAction">customer_findByPage.action</result>
 		</action>
 
 		<!-- 配置用户的模块 -->

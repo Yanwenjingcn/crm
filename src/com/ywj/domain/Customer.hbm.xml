@@ -21,6 +21,7 @@
 		<property name="cust_linkman" column="cust_linkman"/>
 		<property name="cust_phone" column="cust_phone"/>
 		<property name="cust_mobile" column="cust_mobile"/>
+		<property name="filePath" column="filePath"/>
 		
 		<!-- 配置的多方 name是JavaBean属性名称  class="一方类的全路径" cloumn="外键的名称"  -->
 		<many-to-one name="source" class="com.ywj.domain.Dict" column="cust_source"/>

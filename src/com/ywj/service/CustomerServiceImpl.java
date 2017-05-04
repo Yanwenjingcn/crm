@@ -33,6 +33,16 @@ public class CustomerServiceImpl implements CustomerService {
 		return customerDao.findByPage(pageCode,pageSize,criteria);
 	}
 
+	public Customer findById(Long cust_id) {
+	
+		return customerDao.findById(cust_id);
+	}
+
+	public void delete(Customer customer) {
+		customerDao.delete(customer);
+		
+	}
+
 }
 
 
