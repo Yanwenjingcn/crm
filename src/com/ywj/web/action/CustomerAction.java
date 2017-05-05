@@ -2,11 +2,16 @@ package com.ywj.web.action;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.struts2.ServletActionContext;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
@@ -15,6 +20,7 @@ import com.ywj.domain.Customer;
 import com.ywj.domain.Dict;
 import com.ywj.domain.PageBean;
 import com.ywj.service.CustomerService;
+import com.ywj.utils.FastJsonUtil;
 import com.ywj.utils.UploadUtils;
 
 /**
@@ -76,6 +82,7 @@ public class CustomerAction extends ActionSupport implements
 		}
 
 		// 拼接客户级别,这是个Dict的实例对象
+		//首先要确认这个对象是不是存在的
 		Dict level = customer.getLevel();
 		if (level != null && level.getDict_id() != null
 				&& !level.getDict_id().trim().isEmpty()) {
@@ -109,12 +116,15 @@ public class CustomerAction extends ActionSupport implements
 		return "initAddUI";
 	}
 
+	
 	/*
 	 * 文件上传，需要在action中定义类的成员属性，命名是有规则的
 	 * private File upload;//表示要上传的文件 private
 	 * String uploadFileName;//表示要上传文件的文件名 private String
 	 * uploadContentType;//表示要上传文件的MIME类型 提供相应的set方法，拦截器就注入值了
 	 */
+	
+	
 	private File upload;
 	private String uploadFileName;
 	private String uploadContentType;
@@ -161,11 +171,53 @@ public class CustomerAction extends ActionSupport implements
 		//删除客户
 		customerService.delete(customer);
 		//删除文件
-		File file=new File(filepath);
-		if(file.exists()){
-			file.delete();
+		if(filepath!=null){
+			File file=new File(filepath);
+			if(filepath!=null&&file.exists()){
+				file.delete();
+			}
 		}
+		
 		return "delete";
+	}
+	
+	public String initUpdate(){
+		//查询存在的客户信息回显到修改页面,默认已经压栈了，也可以再自己压栈一次
+		//如果是有压栈的数据的话，只能转发，不能重定向
+		customer=customerService.findById(customer.getCust_id());
+		//ValueStack vs=ActionContext.getContext().getValueStack();	
+		return"initUpdate";
+	}
+	
+	public String update() throws IOException{
+		//判断
+		if(uploadFileName!=null){
+			//删除图片
+			String old=customer.getFilePath();
+			if(old!=null&&!old.trim().isEmpty()){
+				File f=new File(old);
+				f.delete();
+			}
+			//上传新图片
+			String uuid=UploadUtils.getUUIDName(uploadFileName);
+			String path="D:\\Tomcat 7.0\\webapps\\upload\\";
+			File file=new File(path+uuid);
+			FileUtils.copyFile(upload, file);
+			customer.setFilePath(path+uuid);		
+		}
+		//新图片的路径保存或者更新到数据库中
+		customerService.update(customer);
+		//更新客户信息,更新真的不是save
+		return "update";
+	}
+	
+	public String findAll(){
+		List<Customer> list=customerService.findAll();
+		//将结果返回，以json的模式返回
+		String jsonString=FastJsonUtil.toJSONString(list);
+		HttpServletResponse response=ServletActionContext.getResponse();
+		FastJsonUtil.write_json(response, jsonString);
+		return NONE;
 	}
 
 }

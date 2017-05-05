@@ -15,19 +15,20 @@ import com.ywj.domain.PageBean;
  * 持久层
  * @author Administrator
  */
-public class CustomerDaoImpl extends HibernateDaoSupport implements CustomerDao {
-	
+public class CustomerDaoImpl extends BaseDaoImpl<Customer> implements CustomerDao {
+
 	/**
 	 * 保存客户
-	 */
+	 
 	public void save(Customer customer) {
 		// 把数据，保存到数据库中
 		this.getHibernateTemplate().save(customer);
 	}
+	*/
 
 	/**
 	 * 分页的查询
-	 */
+	
 	public PageBean<Customer> findByPage(Integer pageCode, Integer pageSize, DetachedCriteria criteria) {
 		PageBean<Customer> page = new PageBean<Customer>();
 		page.setPageCode(pageCode);
@@ -62,6 +63,12 @@ public class CustomerDaoImpl extends HibernateDaoSupport implements CustomerDao 
 		this.getHibernateTemplate().delete(customer);
 		
 	}
+
+	public void update(Customer customer) {
+		this.getHibernateTemplate().update(customer);
+		
+	}
+	 */
 	
 }
 

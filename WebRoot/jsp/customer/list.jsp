@@ -10,6 +10,8 @@
 	type=text/css rel=stylesheet>
 <LINK href="${pageContext.request.contextPath }/css/Manage.css"
 	type=text/css rel=stylesheet>
+	
+	<!-- 引入jquery的包 -->
 <script type="text/javascript"
 	src="${pageContext.request.contextPath }/js/jquery-1.11.3.min.js"></script>
 <SCRIPT language=javascript>
@@ -78,6 +80,8 @@
 <META content="MSHTML 6.00.2900.3492" name=GENERATOR>
 </HEAD>
 <BODY>
+
+
 	<FORM id="customerForm" name="customerForm"
 		action="${pageContext.request.contextPath }/customer_findByPage.action"
 		method=post>
@@ -124,11 +128,18 @@
 										<TABLE cellSpacing=0 cellPadding=2 border=0>
 											<TBODY>
 												<TR>
+												
+													<!-- 就是注意这个model，它就是超级厉害 -->
 													<TD>客户名称：</TD>
-													<TD><INPUT class=textbox id=sChannel2
+													<TD>
+													<INPUT class=textbox id=sChannel2
 														style="WIDTH: 80px" maxLength=50 name="cust_name"
-														value="${ model.cust_name }"></TD>
+														value="${ model.cust_name }">
+													</TD>
 													<!-- 其实这种传值就是name和value这两个值起作用，在后台获取的关键 -->
+													<!-- 注意，这个model很重要，这个就是请求的那个类的模型，它是类的一个属性，所以会默认压入值栈中 -->
+													<!-- 只是这个名字不再是我们所理解的customer、linkman之类的，就是model -->
+													
 													
 													<td>客户级别</td>
 													<td><select name="level.dict_id" id="levelId">
@@ -176,8 +187,10 @@
 														<TD>${customer.cust_phone }</TD>
 														<TD>${customer.cust_mobile }</TD>
 														<TD><a
-															href="${pageContext.request.contextPath }/customerServlet?method=edit&custId=${customer.cust_id}">修改</a>
-															&nbsp;&nbsp; <a
+															href="${pageContext.request.contextPath }/customer_initUpdate?cust_id=${customer.cust_id}">修改</a>
+															&nbsp;&nbsp; 
+															<!-- 点击触发事件，然后return ture 才会进入链接出动作，否则不进行处理 -->
+															<a
 															href="${pageContext.request.contextPath}/customer_delete.action?cust_id=${customer.cust_id}"
 															onclick="return window.confirm('确定删除吗？')">删除</a></TD>
 													</TR>
@@ -189,7 +202,10 @@
 								</TR>
 
 								<TR>
-									<TD><SPAN id=pagelink>
+									<TD>
+									
+									
+									<SPAN id=pagelink>
 											<DIV
 												style="LINE-HEIGHT: 20px; HEIGHT: 20px; TEXT-ALIGN: right">
 												共[<B>${page.totalCount}</B>]条记录，共[<B>${page.totalPage}</B>]页
@@ -212,7 +228,11 @@
 
 												到 <input type="text" size="3" id="page" name="pageCode" />
 												页 <input type="button" value="Go" onclick="to_page()" />
-											</DIV> </SPAN></TD>
+											</DIV> </SPAN>
+											
+											
+											
+											</TD>
 								</TR>
 							</TBODY>
 						</TABLE></TD>

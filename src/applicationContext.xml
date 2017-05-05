@@ -40,6 +40,7 @@
 				<value>com/ywj/domain/User.hbm.xml</value>
 				<value>com/ywj/domain/Customer.hbm.xml</value>
 				<value>com/ywj/domain/Dict.hbm.xml</value>
+				<value>com/ywj/domain/Linkman.hbm.xml</value>
 			</list>
 		</property>
 	</bean>
@@ -92,6 +93,20 @@
 	<bean id="dictDao" class="com.ywj.dao.DictDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
+	
+	<!-- 配置联系人的模块 -->
+	<bean id="linkmanAction" class="com.ywj.web.action.LinkmanAction" scope="prototype">
+		<property name="linkmanService" ref="linkmanService"></property>
+	</bean>
+
+	<bean id="linkmanService" class="com.ywj.service.LinkmanServiceImpl">
+		<property name="linkmanDao" ref="linkmanDao"></property>
+	</bean>
+
+	<bean id="linkmanDao" class="com.ywj.dao.LinkmanDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
 
 </beans>
 

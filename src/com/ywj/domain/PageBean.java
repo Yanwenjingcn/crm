@@ -28,15 +28,11 @@ public class PageBean<T> {
 		this.pageCode = pageCode;
 	}
 	
-	/**
-	 * 璋冪敤getTotalPage() 鑾峰彇鍒版�椤垫暟
-	 * JavaBean鐨勫睘鎬ц瀹氾細totalPage鏄疛avaBean鏄睘鎬�${pageBean.totalPage}
-	 * @return
-	 */
+
 	public int getTotalPage() {
-		// 璁＄畻
+	
 		int totalPage = totalCount / pageSize;
-		// 璇存槑鏁撮櫎
+
 		if(totalCount % pageSize == 0){
 			return totalPage;
 		}else{

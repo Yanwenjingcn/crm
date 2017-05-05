@@ -1,46 +1,46 @@
 package com.ywj.domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import com.alibaba.fastjson.annotation.JSONField;
+
 public class Customer {
 
-	/**
-	 * `cust_id` bigint(32) NOT NULL AUTO_INCREMENT COMMENT '瀹㈡埛缂栧彿(涓婚敭)',
-	 * `cust_name` varchar(32) NOT NULL COMMENT '瀹㈡埛鍚嶇О(鍏徃鍚嶇О)', `cust_user_id`
-	 * bigint(32) DEFAULT NULL COMMENT '璐熻矗浜篿d', `cust_create_id` bigint(32)
-	 * DEFAULT NULL COMMENT '鍒涘缓浜篿d', `cust_source` varchar(32) DEFAULT NULL
-	 * COMMENT '瀹㈡埛淇℃伅鏉ユ簮', `cust_industry` varchar(32) DEFAULT NULL COMMENT
-	 * '瀹㈡埛鎵�睘琛屼笟', `cust_level` varchar(32) DEFAULT NULL COMMENT '瀹㈡埛绾у埆',
-	 * `cust_linkman` varchar(64) DEFAULT NULL COMMENT '鑱旂郴浜�, `cust_phone`
-	 * varchar(64) DEFAULT NULL COMMENT '鍥哄畾鐢佃瘽', `cust_mobile` varchar(16)
-	 * DEFAULT NULL COMMENT '绉诲姩鐢佃瘽',
-	 */
+
 
 	private Long cust_id;
-	// 瀹㈡埛鍚嶇О
+
 	private String cust_name;
 	private Long cust_user_id;
 	private Long cust_create_id;
 
-	/*
-	 * // 瀹㈡埛鐨勬潵婧� private String cust_source; // 鎵�睘浜庤涓� private String
-	 * cust_industry; // 瀹㈡埛鐨勭骇鍒� private String cust_level;
-	 */
 
-	// 鑱旂郴浜哄悕绉�
 	private String cust_linkman;
-	// 鍥哄畾鐢佃瘽
+
 	private String cust_phone;
-	// 绉诲姩鐢佃瘽
+
 	private String cust_mobile;
 
-	// 鎻忚堪鐨勬槸 涓�鎴风殑鏉ユ簮锛屽鏄鎴�
+	
 	private Dict source;
-	// 涓�鎴风殑琛屼笟 澶氭槸瀹㈡埛
+
 	private Dict industry;
-	// 涓�鎴风骇鍒�澶氭槸瀹㈡埛
+
 	private Dict level;
 
 	// 上传文件保存的路径
 	private String filePath;
+	//
+	//
+	//
+	//
+	//与联系人的配对，客户是一方，联系人是多方
+	@JSONField(serialize=false)
+	//在集合上加注解，那么在转json的时候就不会进行转换
+	private Set<Linkman> linkmans=new HashSet<Linkman>();
+	
+	
 
 	public String getFilePath() {
 		return filePath;
@@ -82,13 +82,7 @@ public class Customer {
 		this.cust_create_id = cust_create_id;
 	}
 
-	public String getCust_linkman() {
-		return cust_linkman;
-	}
 
-	public void setCust_linkman(String cust_linkman) {
-		this.cust_linkman = cust_linkman;
-	}
 
 	public String getCust_phone() {
 		return cust_phone;
@@ -110,8 +104,12 @@ public class Customer {
 		return source;
 	}
 
-	public void setSource(Dict source) {
-		this.source = source;
+	public String getCust_linkman() {
+		return cust_linkman;
+	}
+
+	public void setCust_linkman(String cust_linkman) {
+		this.cust_linkman = cust_linkman;
 	}
 
 	public Dict getIndustry() {
@@ -129,4 +127,18 @@ public class Customer {
 	public void setLevel(Dict level) {
 		this.level = level;
 	}
+
+	public Set<Linkman> getLinkmans() {
+		return linkmans;
+	}
+
+	public void setLinkmans(Set<Linkman> linkmans) {
+		this.linkmans = linkmans;
+	}
+
+	public void setSource(Dict source) {
+		this.source = source;
+	}
+
+
 }

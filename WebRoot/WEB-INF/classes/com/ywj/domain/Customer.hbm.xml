@@ -28,6 +28,13 @@
 		<many-to-one name="industry" class="com.ywj.domain.Dict" column="cust_industry"/>
 		<many-to-one name="level" class="com.ywj.domain.Dict" column="cust_level"/>
 		
+		<!-- 让客户放弃维护外键的权利,让多的一方维护我们的外键 -->
+		<set name="linkmans" inverse="true">
+		<key column="lkm_cust_id"/>
+		<one-to-many class="com.ywj.domain.Linkman"/>	
+		</set>
+		
+		
 	</class>
 	
 </hibernate-mapping>    

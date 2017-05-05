@@ -4,8 +4,8 @@
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
 
-<!-- 设置文件上传的大小限制。struts.multipart.maxSize=2097152 -->
-<constant name="struts.multipart.maxSize" value="20971520"></constant>
+	<!-- 设置文件上传的大小限制。struts.multipart.maxSize=2097152 -->
+	<constant name="struts.multipart.maxSize" value="20971520"></constant>
 
 	<!-- 先配置包结构 -->
 	<package name="crm" extends="struts-default" namespace="/">
@@ -22,7 +22,9 @@
 			<!-- 这种是重定向到另一个动作，所以动作钱买你没有斜杠/ -->
 			<result name="save" type="redirectAction">customer_findByPage.action</result>
 			<result name="input">/jsp/error.jsp</result>
+			<result name="update" type="redirectAction">customer_findByPage.action</result>
 			<result name="delete" type="redirectAction">customer_findByPage.action</result>
+			<result name="initUpdate">/jsp/customer/edit.jsp</result>
 		</action>
 
 		<!-- 配置用户的模块 -->
@@ -33,6 +35,11 @@
 		<!-- 配置用字典的模块 -->
 		<action name="dict_*" class="dictAction" method="{1}">
 
+		</action>
+
+		<!-- 配置用字典的模块 -->
+		<action name="linkman_*" class="linkmanAction" method="{1}">
+			<result name="page" >/jsp/linkman/list.jsp</result>
 		</action>
 
 	</package>
