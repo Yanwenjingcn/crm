@@ -20,9 +20,16 @@ public class CustomerDaoImpl extends BaseDaoImpl<Customer> implements
 	 * 统计客户信息
 	 */
 	public List<Object> findBySource() {
+		// 定义HQL
+		// SELECT * FROM cst_customer c,base_dict d WHERE d.dict_id =
+		// c.cust_source
+		// 分组查询 SELECT * FROM cst_customer c,base_dict d WHERE d.dict_id =
+		// c.cust_source group by d.dict_id
+		// 查询内容：SELECT d.dict_item_name,count(*) FROM cst_customer c,base_dict d
+		// WHERE d.dict_id = c.cust_source group by d.dict_id
 
-		String hql="select c.source.dict_item_name,count(*) from Customer c inner join c.source group by c.source";
-		
+		String hql = "select c.source.dict_item_name,count(*) from Customer c inner join c.source group by c.source";
+
 		return (List<Object>) this.getHibernateTemplate().find(hql);
 	}
 
