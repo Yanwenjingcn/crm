@@ -50,6 +50,7 @@ public class LinkmanAction extends BaseAction implements ModelDriven<Linkman>{
 		if(c!=null&&c.getCust_id()!=null){
 			criteria.add(Restrictions.eq("customer.cust_id", c.getCust_id()));
 		}
+		
 		page=linkmanService.findByPage(this.getPageCode(),
 				this.getPageSize(), criteria);
 		

@@ -1,11 +1,15 @@
 package com.ywj.dao;
 
+import java.util.List;
+
 import org.hibernate.criterion.DetachedCriteria;
 
 import com.ywj.domain.Customer;
 import com.ywj.domain.PageBean;
 
 public interface CustomerDao extends BaseDao<Customer>{
+
+	List<Object> findBySource();
 	/*
 	public void save(Customer customer);
 

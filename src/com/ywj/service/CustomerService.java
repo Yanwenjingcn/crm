@@ -22,5 +22,7 @@ public interface CustomerService {
 	public void update(Customer customer);
 
 	public List<Customer> findAll();
+
+	public List<Object> findBySource();
 	
 }

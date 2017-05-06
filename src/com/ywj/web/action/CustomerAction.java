@@ -219,5 +219,14 @@ public class CustomerAction extends ActionSupport implements
 		FastJsonUtil.write_json(response, jsonString);
 		return NONE;
 	}
+	
+	
+	public String findBySource(){	
+		List<Object> list=customerService.findBySource();
+		ValueStack vs=ActionContext.getContext().getValueStack();
+		vs.set("list", list);
+		return "findBySource";
+		
+	}
 
 }

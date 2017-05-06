@@ -10,6 +10,9 @@
 	http://www.springframework.org/schema/aop/spring-aop.xsd
 	http://www.springframework.org/schema/tx 
 	http://www.springframework.org/schema/tx/spring-tx.xsd">
+	
+	<!-- 开启注解扫描 -->
+	<context:component-scan base-package="com.ywj"/>
 
 	<!-- 先配置C3P0的连接池 -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
@@ -41,6 +44,7 @@
 				<value>com/ywj/domain/Customer.hbm.xml</value>
 				<value>com/ywj/domain/Dict.hbm.xml</value>
 				<value>com/ywj/domain/Linkman.hbm.xml</value>
+				<value>com/ywj/domain/Visit.hbm.xml</value>
 			</list>
 		</property>
 	</bean>
